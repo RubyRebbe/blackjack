@@ -1,0 +1,40 @@
+<h1> Game Setup page </h2>
+
+<p>
+Player:  <%= @user.name %>
+</p>
+
+<p>
+Number of players: <%= @game.users.count %>
+</p>
+
+<p>
+player names: <%= @game.users.map { |u| u.name } %>
+</p>
+
+<p>
+number of hands: <%= @game.user_games.count %>
+</p>
+
+<p>
+hands by user names: <%= @game.user_games.map { |ug| ug.user.name } %>
+</p>
+
+<p> 
+navigate to hand from the non-dealer player:
+<%= @user.hand(@game) %>,
+<br />
+user name from the hand:
+<%= @user.hand(@game).user.name %>
+</p>
+
+<p>
+the number of cards in <%= @user.name %>'s hand: <%= @user.hand(@game).cards.count %>
+</p>
+
+<p> 
+the cards in <%= @user.name %>'s hand, by rank: 
+<%= @user.hand(@game).cards.map { |c| c.rank } %>
+</p>
+
+

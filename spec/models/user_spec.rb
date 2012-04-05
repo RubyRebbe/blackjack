@@ -1,0 +1,33 @@
+require 'spec_helper'
+
+describe User do
+  before :all do
+		User.destroy_all # clear out the test db, in particular no dealer
+		@dealer_id = 1
+	end
+
+	it "initially there is no dealer" do
+		dealer = User.find_by_name( "dealer")
+		dealer.should == nil
+	end
+
+	it "dealer is created upon first invocation of class method User.dealer" do
+		User.dealer.should_not be nil
+	end
+
+	it "dealer name is dealer" do
+		User.dealer.name.should == "dealer"
+		id1 = User.dealer.id
+		id2 = User.dealer.id
+		id1.should == id2
+	end
+
+	it "once the real dealer is created, it is unique" do
+		pseudo_dealer = User.create( :name => "dealer", :password => "dealer")
+		pseudo_dealer.id.should == User.dealer.id
+	end
+
+	it "as ther dealer, the user can properly handle the hole card" do
+		pending
+	end
+end

@@ -1,0 +1,46 @@
+require 'spec_helper'
+
+describe UserGame do
+	before :all do
+		[ User, Game, UserGame ].each { |k| k.destroy_all }
+
+		@hand = UserGame.create()
+		@game = Game.create()
+		@bob = @game.users.create( :name => "bob")
+	end
+
+  it "can create a hand object" do
+		@hand.should_not be nil
+	end
+
+	it "can associate a player (User) with the hand" do
+		@hand.create_user( :name => "tsvi" )
+		@hand.user.name.should == "tsvi"
+	end
+
+	it "can associate a game with the hand" do
+		@hand.create_game
+		@hand.game.should_not be nil
+	end
+
+	it "on creation the hand must be associated with a game and a player and the dealer" do
+		@game.dealer.should_not be nil
+		@game.dealer.hand(@game).should_not be nil
+		@bob.hand(@game).should_not be nil
+	end
+
+	it "on creation, a hand has exactly two random cards" do
+		@game.dealer.hand(@game).cards.count.should == 2
+		@bob.hand(@game).cards.count.should == 2
+		puts "dealer cards: #{@game.dealer.hand(@game).cards.map { |c| c.rank }}"
+		puts "bob's cards: #{@bob.hand(@game).cards.map { |c| c.rank }}"
+	end
+
+	it "can evaluate itself when the player is the dealer" do
+		puts "dealer hand value: #{@game.dealer.hand(@game).value}"
+	end
+
+	it "can evaluate itself when the player is not the dealer" do
+		puts "bob hand value: #{@bob.hand(@game).value}"
+	end
+end

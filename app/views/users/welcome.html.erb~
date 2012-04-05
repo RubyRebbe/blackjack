@@ -1,0 +1,14 @@
+<h1> Welcome to the Blackjack Game!</h1>
+
+<br />
+
+<p>
+If you are a returning user, please login in here:
+<%= link_to 'login', new_credential_path %> 
+</p>
+
+<p>
+If you are a new user, please register here:
+<%= link_to 'register', new_user_path %> 
+</p>
+

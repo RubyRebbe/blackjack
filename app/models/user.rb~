@@ -1,0 +1,45 @@
+class User < ActiveRecord::Base 
+  has_many :credentials
+  has_many :user_games
+  has_many :games, :through => :user_games
+
+	validates_uniqueness_of :name
+
+	# creates the dealer, if needed, 
+	# validate_uniqueness insures that there is only one dealer
+	def self.dealer
+		User.find_by_name( "dealer") || User.create( :name => "dealer", :password => "dealer" )
+	end
+
+	# pre-condition: game != nil
+	def hand( game)
+		h = user_games.where( :game_id => game.id)
+		h.empty? ? nil : h.first
+	end
+
+	# add a randomly generated card to the hand of the user in this game
+	# pre-condition: game != nil
+	def hit_me(game)
+		hand(game).cards << Card.hit
+	end
+
+	# pre-condition: this user is the dealer
+	# if the method returns true, the dealer will hit, else stand
+	def dealer_strategy( game)
+		self.hand(game).value < 17
+	end
+
+	def wins
+		# win a game means:  game.winner == self
+		self.games.find_all { |g| g.winner == self }.count
+	end
+
+	def losses
+		# lost a game is:  game.winner != self
+		self.games.find_all { |g| g.winner != self }.count
+	end
+
+	def ties
+		0 # pending implementation
+	end
+end

@@ -1,0 +1,30 @@
+<h1>Blackjack Leaderboard</h1>
+
+<p>
+Welcome to the Blackjack leaderboard,
+<%= @user ? @user.name : "" %>.
+</p>
+
+<table>
+  <tr>
+    <th>Player</th>
+		<th> Wins </th>
+    <th>Losses</th>
+		<th> Ties </th>
+  </tr>
+
+<% @users.each do |user| %>
+  <tr>
+    <td><%= user.name %></td>
+		<td><%= user.wins %></td>
+ 		<td><%= user.losses %></td>
+		<td><%= user.ties %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+<%= link_to 'Play a new game', :controller => "games", :action => "setup" %>
+
+<br />
+<%= link_to 'Logout', :action => "welcome" %>

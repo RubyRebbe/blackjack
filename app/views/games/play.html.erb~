@@ -1,0 +1,32 @@
+<h1> Game Play page </h2>
+
+<p> Player <%= @user.name %>'s hand:
+<ul>
+<li> card ranks in order of play: <%= @user.hand(@game).cards.map { |c| c.rank } %> </li>
+<li> card values: <%= @user.hand(@game).cards.map { |c| c.value } %> </li>
+<li> value of hand: <%= @user.hand(@game).value %> </li>
+</ul>
+
+<p> Dealer's hand: </p>
+<ul>
+<li> 
+	card ranks in order of play: <%= @game.dealer.hand(@game).cards.map { |c| c.rank } %>
+</li>
+<li> card values: <%= @game.dealer.hand(@game).cards.map { |c| c.value } %> </li>
+<li> value of hand: <%= @game.dealer.hand(@game).value %> </li>
+</ul>
+
+<% if @game.is_done? then %>
+	<p> The game is done! </p>
+	See your scores on the 
+	<%= link_to 'leaderboard', :controller => "users", :action => "index" %>
+<% else %>
+	<p> <%= @user.name %>, do you want to: </p>
+	<ul>
+	<li> <%= link_to 'hit?', :controller => "games", :action => "hit" %> </li>
+	<li> <%= link_to 'stand?', :controller => "games", :action => "stand" %> </li>
+	</ul>
+<% end %>
+
+
+
