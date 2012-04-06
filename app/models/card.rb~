@@ -11,7 +11,7 @@ class Card < ActiveRecord::Base
 	end
 
 	# evaluator. works correctly for all but aces
-	# pending:  fix for aces
+	# pending:  ace defaults to 1. When is it 11?
 	def self.values
 		Hash[
 			[[ "ace", 1 ]] + 
@@ -24,7 +24,7 @@ class Card < ActiveRecord::Base
 		# generate a random number between 0 and 12
 		# use it to index into the collection of all ranks
 		# return a card with that rank
-		self.create( :rank => self.ranks[ rand( 0..12)])
+		self.create( :rank => self.ranks[ rand( 12)])
 	end
 
 	# value of this card. for the ace, depends on whose hand it is in:  dealer or player

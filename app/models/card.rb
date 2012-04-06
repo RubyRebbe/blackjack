@@ -24,7 +24,7 @@ class Card < ActiveRecord::Base
 		# generate a random number between 0 and 12
 		# use it to index into the collection of all ranks
 		# return a card with that rank
-		self.create( :rank => self.ranks[ rand( 0..12)])
+		self.create( :rank => self.ranks[ rand( 12)])
 	end
 
 	# value of this card. for the ace, depends on whose hand it is in:  dealer or player
