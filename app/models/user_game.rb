@@ -5,7 +5,8 @@ class UserGame < ActiveRecord::Base
 	has_many	 :cards
 
 	after_create do
-		2.times { cards << Card.hit }
+	 	cards << Card.hit
+		cards << Card.hit
 	end
 
 	# default ace value is 1.  When is it 11? Review the rules.
